@@ -236,7 +236,25 @@ class _MultiSelectCheckListState<T> extends State<MultiSelectCheckList<T>> {
         final CheckListCard<T> _item = _items[index];
         final bool isSelected = _selectedItems.contains(_item);
         //
-        var checkbox = Container();
+        var checkbox = Transform.scale(
+          scale: 1 * widget.chechboxScaleFactor,
+          child: SizedBox(
+            height: 20,
+            width: 20,
+            child: Checkbox(
+              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              activeColor: _item.selectedColor,
+              checkColor: _item.checkColor,
+              fillColor: !_item.enabled
+                  ? MaterialStateProperty.all(_item.disabledColor)
+                  : MaterialStateProperty.all(_item.enabledColor),
+              shape: _item.shape,
+              value: isSelected,
+              side: _item.checkBoxBorderSide,
+              onChanged: !_item.enabled ? null : (v) {},
+            ),
+          ),
+        );
         return AnimatedContainer(
           //
           duration: widget.animations.decorationAimationDuration,
